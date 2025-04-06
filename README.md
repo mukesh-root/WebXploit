@@ -53,49 +53,9 @@ Available Modes:
 - `--wordlist custom.txt`: Use custom wordlist for directory brute-force
 
 ---
-
-## 📂 Output Files
-
-Stored in `/outputs`:
-- `subdomains.txt`
-- `live_subdomains.txt`
-- `parameters.txt`
-- `dirbuster_output.txt`
-- `nuclei_results.txt`
-- `secrets_found.txt`
-- `jwt_analysis.txt`
-- `subdomain_takeovers.txt`
-
 Reports are saved in `/reports`:
 - `report.html`
 - `report.md`
-
----
-
-## 📁 Project Structure
-
-```
-WebXploit/
-├── webxploit.py
-├── install.sh
-├── requirements.txt
-├── README.md
-├── modules/
-│   ├── subdomain_enum.py
-│   ├── param_discover.py
-│   ├── sqlmap_wrapper.py
-│   ├── dirbuster.py
-│   ├── nuclei_scan.py
-│   ├── secret_leaks.py
-│   ├── jwt_analyzer.py
-│   ├── sub_takeover.py
-│   └── waf_bypass.py
-├── utils/
-│   └── rich_logger.py
-├── wordlists/
-├── outputs/
-└── reports/
-```
 
 ---
 
