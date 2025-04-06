@@ -1,41 +1,39 @@
 # WebXploit
 
-**WebXploit** is a sophisticated, modular web penetration testing framework that automates reconnaissance, vulnerability scanning, exploitation, and post-exploitation tasks with advanced capabilities.
-
-![WebXploit Banner](https://via.placeholder.com/800x200.png?text=WebXploit+by+YourName)
+**WebXploit** is a powerful, modular web penetration testing framework designed for modern recon, exploitation, and post-exploitation. It automates key steps in the web security assessment process, from subdomain enumeration to secret leaks, vulnerability scanning, and advanced token analysis.
 
 ---
 
 ## 🚀 Features
 
 - 🔍 **Subdomain Enumeration** (Sublist3r + Amass)  
-- 🌐 **Live Filtering** using HTTPX with 403 tracking  
+- 🌐 **Live Subdomain Filtering** using HTTPX with 403 logging  
 - 🕵️‍♂️ **Parameter Discovery** using ParamSpider  
-- 💉 **SQLi Detection** with SQLMap automation  
-- 📁 **Directory Bruteforcing** with Dirbuster (custom wordlist supported)  
-- 🔐 **Secret Leak Detection** from JS files and HTTP responses  
-- 🛡️ **WAF Bypass Payload Testing**  
-- 📊 **Nuclei Vulnerability Scanning**  
-- 🎯 **JWT Analyzer** for token security inspection  
+- 💉 **SQL Injection Detection** using SQLMap  
+- 📁 **Directory Bruteforcing** with support for custom wordlists  
+- 🔐 **Secret Leak Detection** from JavaScript files & responses  
+- 🛡️ **WAF Bypass Detection** with smart payloads  
+- 📊 **Vulnerability Scanning** using Nuclei  
+- 🧠 **JWT Token Analyzer**  
 - ⚠️ **Subdomain Takeover Detection**  
-- 🔎 **Post-Exploitation** module support (expandable)  
-- 💻 **Rich CLI Output** using `rich`  
-- ⚙️ **Multiprocessing** for speed and scalability  
-- 📄 **HTML/Markdown Report Generator**  
-- 🔄 **Mode Switching**: Recon Mode / Attack Mode / Post-Exploitation  
+- 🎯 **Post-Exploitation Module Support**  
+- 💻 **Rich Terminal Output** with `rich`  
+- ⚙️ **Multiprocessing** for speed (Dirbuster & Nuclei)  
+- 📝 **HTML/Markdown Report Generation**  
+- 🔄 **Mode Switching**: Recon / Exploitation / Post-Exploitation  
 
 ---
 
 ## 📦 Installation
 
-> One-liner (Linux/macOS):
+> One-liner install:
 ```bash
-curl -sL https://raw.githubusercontent.com/mukesh-root/WebXploit/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/<your-username>/WebXploit/main/install.sh | bash
 ```
 
-Or manually:
+Manual installation:
 ```bash
-git clone https://github.com/mukesh-root/WebXploit.git
+git clone https://github.com/<your-username>/WebXploit.git
 cd WebXploit
 pip install -r requirements.txt
 ```
@@ -44,31 +42,21 @@ pip install -r requirements.txt
 
 ## 🛠️ Usage
 
-### Full Attack Chain
 ```bash
 python3 webxploit.py --target example.com --mode full
 ```
 
-### Recon Only
-```bash
-python3 webxploit.py --target example.com --mode recon
-```
-
-### Post-Exploitation
-```bash
-python3 webxploit.py --target example.com --mode post
-```
-
-### With Custom Wordlist
-```bash
-python3 webxploit.py --target example.com --wordlist wordlists/custom_dirs.txt
-```
+Available Modes:
+- `--mode recon`: Only subdomain, parameters, JS analysis
+- `--mode exploit`: SQLMap, Dirbuster, Nuclei, JWT, Secrets
+- `--mode post`: Post-exploitation modules
+- `--wordlist custom.txt`: Use custom wordlist for directory brute-force
 
 ---
 
-## 🗂️ Output
+## 📂 Output Files
 
-All findings are saved to the `outputs/` directory:
+Stored in `/outputs`:
 - `subdomains.txt`
 - `live_subdomains.txt`
 - `parameters.txt`
@@ -78,22 +66,52 @@ All findings are saved to the `outputs/` directory:
 - `jwt_analysis.txt`
 - `subdomain_takeovers.txt`
 
-Final summary reports are in `reports/`:
-- `report.md`
+Reports are saved in `/reports`:
 - `report.html`
-
-## ⚠️ Legal Disclaimer
-
-This tool is intended for **educational purposes only**. Use it only on systems you own or have explicit permission to test. Unauthorized use is illegal and unethical.
+- `report.md`
 
 ---
 
-## ✨ Contributions
+## 📁 Project Structure
 
-Pull requests are welcome! Feel free to improve modules, add detection engines, or enhance report formatting.
+```
+WebXploit/
+├── webxploit.py
+├── install.sh
+├── requirements.txt
+├── README.md
+├── modules/
+│   ├── subdomain_enum.py
+│   ├── param_discover.py
+│   ├── sqlmap_wrapper.py
+│   ├── dirbuster.py
+│   ├── nuclei_scan.py
+│   ├── secret_leaks.py
+│   ├── jwt_analyzer.py
+│   ├── sub_takeover.py
+│   └── waf_bypass.py
+├── utils/
+│   └── rich_logger.py
+├── wordlists/
+├── outputs/
+└── reports/
+```
+
+---
+
+## ⚠️ Legal Disclaimer
+
+**This tool is for educational and authorized security testing only.**  
+Do not use it against targets without proper permission.
+
+---
+
+## 🙌 Contribution
+
+Pull requests are welcome! Suggest improvements, submit bug fixes, or add your own modules!
 
 ---
 
 ## 📄 License
 
-MIT License © 2025 YourName
+MIT License © 2025 [YourName]
