@@ -1,45 +1,34 @@
-import subprocess
+# modules/subdomain_enum.py
+
 import os
-from utils.rich_logger import log_info, log_success
+import subprocess
+from utils.rich_logger import log_info, log_error
 
 def run(target):
-    log_info("Running Sublist3r...")
-    sublist3r_output = subprocess.getoutput(f"sublist3r -d {target} -o outputs/subdomains.txt")
-    
-    log_info("Running Amass (passive)...")
-    amass_output = subprocess.getoutput(f"amass enum -passive -d {target} -o outputs/amass_subs.txt")
+    os.makedirs("outputs", exist_ok=True)
 
-    log_info("Merging subdomains...")
-    with open("outputs/subdomains.txt", "a") as out:
-        with open("outputs/amass_subs.txt") as f:
-            for line in f:
-                out.write(line)
-    
-    log_success("Subdomain enumeration complete.")
+    log_info("[*] Running Sublist3r...")
+    subprocess.run(f"sublist3r -d {target} -o outputs/sublist3r.txt", shell=True)
+
+    log_info("[*] Running Amass (passive)...")
+    subprocess.run(f"amass enum -d {target} -passive -o outputs/amass.txt", shell=True)
+
+    log_info("[*] Merging subdomains...")
+    subprocess.run("cat outputs/sublist3r.txt outputs/amass.txt | sort -u > outputs/final_subdomains.txt", shell=True)
+
+    log_info("[+] Subdomain enumeration complete.")
 
 def filter_live_subdomains():
-    import httpx
-    log_info("Filtering live subdomains...")
-    live = []
-    forbidden = []
-    with open("outputs/subdomains.txt") as f:
-        for line in f:
-            url = f"http://{line.strip()}"
-            try:
-                r = httpx.get(url, timeout=5.0)
-                if r.status_code == 403:
-                    forbidden.append(line.strip())
-                elif r.status_code < 400:
-                    live.append(line.strip())
-            except:
-                continue
+    if not os.path.exists("outputs/final_subdomains.txt"):
+        log_error("final_subdomains.txt not found!")
+        return
 
-    with open("outputs/live_subdomains.txt", "w") as f:
-        for l in live:
-            f.write(l + "\n")
-
-    with open("outputs/forbidden_subdomains.txt", "w") as f:
-        for l in forbidden:
-            f.write(l + "\n")
-
-    log_success(f"Live subdomains saved: {len(live)}")
+    try:
+        subprocess.run(
+            "cat outputs/final_subdomains.txt | httpx -silent -status-code -no-color | tee outputs/httpx_raw.txt | awk '$2 == \"[200]\" || $2 == \"[403]\" {print $1}' > outputs/live_subdomains.txt",
+            shell=True,
+            check=True,
+        )
+        log_info("Live subdomains saved to outputs/live_subdomains.txt")
+    except subprocess.CalledProcessError:
+        log_error("Failed to run httpx for live filtering.")
