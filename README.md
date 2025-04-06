@@ -30,12 +30,12 @@
 
 > One-liner (Linux/macOS):
 ```bash
-curl -sL https://raw.githubusercontent.com/<your-username>/WebXploit/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/mukesh-root/WebXploit/main/install.sh | bash
 ```
 
 Or manually:
 ```bash
-git clone https://github.com/<your-username>/WebXploit.git
+git clone https://github.com/mukesh-root/WebXploit.git
 cd WebXploit
 pip install -r requirements.txt
 ```
